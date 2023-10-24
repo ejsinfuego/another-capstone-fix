@@ -6,7 +6,7 @@
         <div class="dashbordLBox">
             <div class="que">
                 <h4 class="mont">On Queue</h4>
-                <div><a href="">Table View</a></div>
+                <div><a id="appointment">Add Transaction</a></div>
             </div>
             <div class="filters">
                 <p>Filter Transactions</p>
@@ -51,6 +51,39 @@
             </div>
         </div>
     </div>
+    {{-- code here that add transaction and requirements --}}
+    <div class="flex ">
+        <div id="transaction" class="dashbordRBox w-50 py-3 h-auto z-30 position-absolute mx-5 flex-wrap none">
+        
+        
+        <form method="GET" action="{{ route('addTransaction', $user)}}"  id="window" class="col p-4">
+        <div class="flex-wrap py-2">
+        <h4>Add Transaction</h4>
+        </div>
+            @csrf
+            <div class="form-group">
+                <label for="transaction">Transaction:</label>
+                <input type="text" class="form-control" id="transaction" name="transaction" required>
+            </div>
+            <div class="form-group">
+                <label for="transaction">Where to Secure</label>
+                <select name="window_id[]" class="form-control">
+                @foreach($windows as $wind)
+                <option class="form-control" value="{{$wind->id}}">{{$wind->windowname}}</option>
+                @endforeach
+            </select> 
+            </div>
+           
+            <div class="form-group">
+                <input i type="text" class="window" name="requirements[]" placeholder="Enter Requirements"> 
+                <button type="button" onclick="addRequirementInput()">Add Requirement</button>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    
     <div class="dashboardRight">
         <div class="dashbordRBox">
         {{-- student profile/info
@@ -70,5 +103,48 @@
     </div>
 </div>
 <script>
+    $(document).ready(function(){
+        $('#appointment').click(function(){
+            if($('#transaction').is(':visible')){
+                $('#transaction').hide();
+                $('#appointment').text('Add Transaction');
+            }
+            else{
+                $('#transaction').show();
+                $('#appointment').text('Close');
+            }
+        });
+    });
+
+    function addRequirementInput() {
+                        
+                        
+                        var form = document.getElementById("window");
+                        //create also an element for select
+                        var select = document.createElement("select");
+                        select.name = "window_id[]";
+                        select.className = "form-control";
+                        var option = document.createElement("option");
+                        option.className = "form-control";
+                        option.value = "";
+                        option.text = "Select Window";
+                        select.appendChild(option);
+                        @foreach($windows as $wind)
+                        var option = document.createElement("option");
+                        option.className = "form-control";
+                        option.value = "{{$wind->id}}";
+                        option.text = "{{$wind->windowname}}";
+                        select.appendChild(option);
+                        @endforeach
+                        form.insertBefore(select, form.childNodes[7]);
+
+                        var input = document.createElement("input");
+                        input.type = "text";
+                        input.name = "requirements[]";
+                        input.placeholder = "Enter Requirement";
+                        input.className = "window";
+                   
+                        form.insertBefore(input, form.childNodes[8]);
+                    }
 </script>
 @endsection

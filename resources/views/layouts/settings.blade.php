@@ -66,7 +66,8 @@
                                     <a href="{{route('settings')}}" class="dropdown-item">
                                         {{_('Settings')}}
                                     </a>
-                                    <a href="{{route('editProfile')}}" class="dropdown-item">
+                                    {{-- your edit profile route here --}}
+                                    <a href="#" class="dropdown-item">
                                         {{_('Edit Profile   ')}}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

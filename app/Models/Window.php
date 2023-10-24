@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Requirement;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Window extends Model
 {
@@ -12,6 +13,10 @@ class Window extends Model
   
     public function appointment(){
         return $this->hasMany(Appointment::class);
+    }
+
+    public function requirements(){
+        return $this->hasMany(Requirement::class);
     }
    
 }

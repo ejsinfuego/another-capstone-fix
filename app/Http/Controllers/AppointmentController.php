@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
-use App\Models\Guest;
-use App\Models\Schedule;
-use App\Models\Status;
-use App\Models\Student;
 use App\Models\Time;
+use App\Models\Guest;
+use App\Models\Status;
 use App\Models\Window;
+use App\Models\Student;
+use App\Models\Schedule;
+use App\Models\Appointment;
+use App\Models\Requirement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Date;
 
 class AppointmentController extends Controller
@@ -53,7 +55,30 @@ class AppointmentController extends Controller
       $data = new Schedule();
       $time = new Time();
       $wins = Appointment::with(['times','wind','sched','status','guests'])->get();
-      return view('appoint',['status'=>Status::get(),'apps'=>$wins,'date'=>$data->all(),'time'=>$time->all(),'name'=>$id,'id'=>$id,'window'=>$windows->where('id',$window)->first()]);
+
+      $window_as_per_requirement = array();
+      foreach(DB::table('window')->where('id', $window)->get() as $requirement){
+        array_push($window_as_per_requirement, $requirement->windowname);
+      }
+
+      return view('appoint',[
+        'status'=>Status::get(),
+        'apps'=>$wins,
+        'date'=>$data->all(),
+        'time'=>$time->all(),
+        'name'=>$id,
+        'id'=>$id,
+        'window' => $windows->where('id',$window)->first(),
+        'transactions' => DB::table('transaction')->where('window_id', $window)->get(),
+      'requirements' => DB::table('requirements')->get(),
+      'window_as_requirement' => $window_as_per_requirement,
+    ]);
+    }
+
+    function requirements($transaction){
+      $requirements = DB::table('requirements')->where('transaction_id', $transaction)->get();
+
+      return $requirements;
     }
 
     function transactGuest($id,$window){

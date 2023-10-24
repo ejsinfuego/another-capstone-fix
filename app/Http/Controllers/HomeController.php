@@ -39,10 +39,13 @@ class HomeController extends Controller
         };
         return view('home',['active'=>
         'dashboard', 'app'=>$win,
+        'user' => $user,
         //this code below determines the window of the user
         //the $user variable declared above gets the window_id (check the users table, i added wind-id column) and compares it to the window_id column in the appointments table. 
         // nag add ako ng window_id sa appointments table para ma compare ko sa window_id ng user.  
         'appointments'=> $request,
+        'windows' =>Window::all(),
+        
 
     ]);
     }   

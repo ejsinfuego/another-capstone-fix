@@ -84,7 +84,7 @@ Route::get('/Times/{id}',[ScheduleController::class,'deleteSched'])->name('delet
 //WINDOW
 Route::get('/addWindow',[WindowController::class,'addWindow'])->name('addWindow');
 Route::get('/window/{id}',[WindowController::class,'deleteWindow'])->name('deleteWindow');
-
+Route::get('/addTransact/{window}', [WindowController::class,'addTransaction'])->name('addTransaction');
 
 //LOGIN GUEST
 Route::get('/login/guest',[GuestController::class,'login'])->name('guestLogin');
@@ -105,6 +105,7 @@ Route::post('/saveEmploye',[EmployeeController::class,'saveemployee'])->name('sa
 Route::get('/appointment/{Studentid}',[AppointmentController::class,'index'])->name('index');
 Route::get('/guestappointment/{id}',[AppointmentController::class,'indexs'])->name('indexs');
 Route::get('/tor/{Studentid}',[AppointmentController::class,'tor'])->name('tor');
+Route::get('/get-requirements/{transaction}', [AppointmentController::class, 'requirements'])->name('requirements');
 
 
 //DELETE TIME
@@ -116,6 +117,9 @@ Route::get('/setTransact',[AppointmentController::class,'transacts'])->name('set
 Route::get('/setTransacts',[AppointmentController::class,'guesttransacts'])->name('setTransacts');
 Route::get('/approveTransacts/{id}',[AppointmentController::class,'approvetransacts'])->name('approve');
 Route::get('/denyTransacts/{id}',[AppointmentController::class,'denytransact'])->name('deny');
+
+
+
 
 Route::get('/linkstorage', function () {
     Artisan::call('storage:link');

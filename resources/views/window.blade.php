@@ -8,9 +8,13 @@
                         <h5 class="programname">Add Window</h5>
                         <div class="lists">
                           <form action="{{route('addWindow')}}" id="window">
+                            
                             <input type="text" class="window" name="windowname" placeholder="Enter Window Name">
                             <input type="text" class="window" name="windowno" placeholder="Enter Window No">
                             <input type="text" class="window" name="transactiondata" placeholder="Enter Transaction">
+                            <input i type="text" class="window" name="requirements[]" placeholder="Enter Requirements">
+                            <button type="button" onclick="addRequirementInput()">Add Requirement</button>
+                            
 
                             <button class="window">Submit</button>
                           </form>
@@ -44,6 +48,16 @@
                             </table>
                         </div>
                     </div>
-                </div>
-           
+                <script>
+                    function addRequirementInput() {
+                        var input = document.createElement("input");
+                        input.type = "text";
+                        input.name = "requirements[]";
+                        input.placeholder = "Enter Requirement";
+                        input.className = "window";
+                        var form = document.getElementById("window");
+                        form.insertBefore(input, form.childNodes[9]);
+                    }
+                </script>
+
 @endsection
